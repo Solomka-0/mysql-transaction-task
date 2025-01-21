@@ -1,14 +1,16 @@
 <?php
+header('Content-Type: application/json');
+
 include_once('db.php');
 include_once('model.php');
 
-$user_id = isset($_GET['user'])
-    ? (int)$_GET['user']
-    : null;
+$conn = get_connect();
 
-if ($user_id) {
-    // Get transactions balances
-    $transactions = get_user_transactions_balances($user_id, $conn);
-    // TODO: implement
+if (isset($_GET['user']) && is_numeric($_GET['user'])) {
+    $user_id = intval($_GET['user']);
+    $balances = get_user_transactions_balances($user_id, $conn);
+    echo json_encode($balances);
+} else {
+    echo json_encode([]);
 }
 ?>

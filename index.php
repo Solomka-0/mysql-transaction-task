@@ -2,50 +2,52 @@
 
 include_once('db.php');
 include_once('model.php');
-include_once('test.php');
 
 $conn = get_connect();
+$users = get_users($conn);
 
-// Uncomment to see data in db
-// run_db_test($conn);
-  
 $month_names = [
     '01' => 'January',
-    '02' => 'Februarry',
-    '03' => 'March'
-]
+    '02' => 'February',
+    '03' => 'March',
+    '04' => 'April',
+    '05' => 'May',
+    '06' => 'June',
+    '07' => 'July',
+    '08' => 'August',
+    '09' => 'September',
+    '10' => 'October',
+    '11' => 'November',
+    '12' => 'December'
+];
 ?>
-    
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User transactions information</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User transactions information</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>User transactions information</h1>
-  <form action="data.php" method="get">
+<h1>User transactions information</h1>
+<form id="user-form">
     <label for="user">Select user:</label>
     <select name="user" id="user">
-    <?php
-    $users = get_users($conn);
-    foreach ($users as $id => $name) {
-        echo "<option value=\"$id\">".$name."</option>";
-    }
-    ?>
+        <option value="">-- Select user --</option>
+        <?php
+        foreach ($users as $id => $name) {
+            echo "<option value=\"$id\">".$name."</option>";
+        }
+        ?>
     </select>
-    <input id="submit" type="submit" value="Show">
-  </form>
+</form>
 
-  <div id="data">
-      <h2>Transactions of `User name`</h2>
-      <table>
-          <tr><th>Mounth</th><th>Amount</th></tr>
-          <tr><td>...</td><td>...</td>
-       </table>
-  </div>  
+<div id="data">
+    <!-- Данные будут загружаться сюда -->
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>

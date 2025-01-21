@@ -21,15 +21,14 @@ function get_users($conn)
 }
 
 /**
- * Return transactions balances of given user.
+ * Return transactions balances of the given user per month.
+ *
+ * @param int $user_id The ID of the user.
+ * @param PDO $conn The database connection.
+ * @return array An array of monthly balances.
  */
 function get_user_transactions_balances($user_id, $conn)
-{     
-    // TODO: implement
-    return [];
-}
-
-function get_monthly_balance($conn, $user_id) {
+{
     $sql = "
     SELECT
         strftime('%Y-%m', t.trdate) AS month,
@@ -41,6 +40,7 @@ function get_monthly_balance($conn, $user_id) {
     GROUP BY month
     ORDER BY month
     ";
+
     $stmt = $conn->prepare($sql);
     $stmt->execute([$user_id]);
     $balances = $stmt->fetchAll(PDO::FETCH_ASSOC);
