@@ -26,12 +26,13 @@ function displayBalances(balances) {
   const userName = userSelect.options[userSelect.selectedIndex].text;
   let html = "<h2>Transactions of " + userName + "</h2>";
   html += '<table>';
-  html += '<tr><th>Month</th><th>Amount</th></tr>';
+  html += '<tr><th>Month</th><th>Amount</th><th>Days</th></tr>';
 
   balances.forEach(function(balance) {
     const month = getMonthName(balance.month.slice(5,7)) + ' ' + balance.month.slice(0,4);
     const amount = parseFloat(balance.balance).toFixed(2);
-    html += "<tr><td>" + month + "</td><td>" + amount + "</td></tr>";
+    console.log(balance)
+    html += `<tr><td>${month}</td><td>${amount}</td><td>${balance.days_with_transactions}</td></tr>`;
   });
 
   html += '</table>';

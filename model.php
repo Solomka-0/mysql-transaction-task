@@ -33,7 +33,8 @@ function get_user_transactions_balances($user_id, $conn)
     SELECT
         strftime('%Y-%m', t.trdate) AS month,
         SUM(CASE WHEN ua.id = t.account_to THEN t.amount ELSE 0 END) -
-        SUM(CASE WHEN ua.id = t.account_from THEN t.amount ELSE 0 END) AS balance
+        SUM(CASE WHEN ua.id = t.account_from THEN t.amount ELSE 0 END) AS balance,
+        COUNT(DISTINCT DATE(t.trdate)) AS days_with_transactions
     FROM transactions t
     JOIN user_accounts ua ON ua.id = t.account_from OR ua.id = t.account_to
     WHERE ua.user_id = ?
